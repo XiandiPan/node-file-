@@ -2,6 +2,7 @@
 
 const fsP = require("fs/promises"); //similar to import
 const axios = require("axios");
+const { stringify } = require("querystring");
 
 const argv = process.argv;
 
@@ -17,8 +18,6 @@ async function cat(path) {
     return contents;
   } catch (err) {
     console.log('file does not exist');
-    // if error then invoke webCat with passed in arg
-    await webCat(path)
     process.exit(1);
   }
 }
@@ -36,5 +35,10 @@ async function webCat(url) {
     }
 }
 
-
-cat(argv[2]);
+if (argv[2].startsWith('http')) {
+  console.log('is URL');
+  webCat(argv[2]);
+} else {
+  console.log('is txt file');
+  cat(argv[2]);
+}
