@@ -4,7 +4,11 @@ const fsP = require("fs/promises"); //similar to import
 const axios = require("axios");
 
 const argv = process.argv;
-// console.log("argv",argv)
+
+/** determine if path is a file that exists or is url
+ * log file contents if no error
+ * if an error, invoke our webCat function
+*/
 
 async function cat(path) {
   try {
@@ -18,6 +22,10 @@ async function cat(path) {
     process.exit(1);
   }
 }
+
+/** Axios call to get first 80 char of response data if valid url
+ * if not a valid url will log an error
+ */
 
 async function webCat(url) {
     try {
